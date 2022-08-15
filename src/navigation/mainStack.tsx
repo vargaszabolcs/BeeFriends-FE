@@ -1,26 +1,21 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
 import SettingsButton from "../components/SettingsButton";
-import HivesScreen from "../screens/HivesScreen";
+import HomeScreen from "../screens/HomeScreen";
 import SettingsScreen from "../screens/SettingsScreen";
 import { MainStackParamList } from "../types";
 
 const MainNavigator = createNativeStackNavigator<MainStackParamList>();
 
-export default function MainTabNavigator() {
+export default function MainStack() {
     return (
-        <MainNavigator.Navigator initialRouteName="Hives">
+        <MainNavigator.Navigator initialRouteName="Home">
             <MainNavigator.Screen
-                name="Hives"
-                component={HivesScreen}
-                options={{
-                    title: "Hives",
-                    headerRight: () => (
-                        <SettingsButton
-                            onClick={() => { console.log("Settings button clicked"); }}
-                        />
-                    )
-                }}
+                name="Home"
+                component={HomeScreen}
+                options={({navigation}) => ({
+                    headerRight: () => <SettingsButton onClick={() => {navigation.navigate("Settings");}} />,
+                })}
             />
             <MainNavigator.Screen name="Settings" component={SettingsScreen} options={{ title: "Settings" }} />
         </MainNavigator.Navigator>

@@ -9,7 +9,7 @@ export type LoginStackParamList = {
 }
 
 export type MainStackParamList = {
-    Hives: undefined;
+    Home: undefined;
     Settings: undefined;
 }
 
@@ -34,4 +34,16 @@ export type LoginResponse = {
     email: string;
     full_name: string;
     error?: string;
+}
+
+
+export type BeehiveData = {
+    _id: string,
+    name: string,
+    location: string,
+    description: string,
+    color: string,
+    assigned_number: number,
+    population: number,
+    birthday: string,
 }

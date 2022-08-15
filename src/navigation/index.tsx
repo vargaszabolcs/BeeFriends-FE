@@ -10,7 +10,7 @@ import store from "../store/store";
 
 import { IStoreState, RootStackParamList } from "../types";
 import LoginScreenStack from "./loginStack";
-import MainTabNavigator from "./mainTabNavigator";
+import MainStack from "./mainStack";
 
 export default function Navigation() {
     return (
@@ -38,7 +38,7 @@ function RootNavigator() {
         <RootStack.Navigator initialRouteName="LoginStack">
             { !userData?.token 
                 ? <RootStack.Screen name="LoginStack" component={LoginScreenStack} options={{ headerShown: false }} /> 
-                : <RootStack.Screen name="MainTabNavigator" component={MainTabNavigator} options={{ headerShown: false }} /> 
+                : <RootStack.Screen name="MainTabNavigator" component={MainStack} options={{ headerShown: false }} /> 
             }
         </RootStack.Navigator>
     );
