@@ -9,13 +9,11 @@ interface ILoginInputsProps {
     isDisabled?: boolean,
 }
 
-const LoginInputs: React.FC<ILoginInputsProps> = ({email, password, onEmailChange, onPasswordChange, isDisabled = false}) => {
-    return (
-        <>
-            <InputField value={email} onChangeText={onEmailChange} isDisabled={isDisabled} type={"email"} placeholder={"Email"} />
-            <InputField value={password} onChangeText={onPasswordChange} isDisabled={isDisabled} type={"password"} placeholder={"Password"} />
-        </>
-    );
-};
+const LoginInputs: React.FC<ILoginInputsProps> = ({email, password, onEmailChange, onPasswordChange, isDisabled = false}) => (
+    <>
+        <InputField value={email} onChangeText={onEmailChange} isDisabled={isDisabled} type={"email"} placeholder={"Email"} />
+        <InputField value={password} onChangeText={onPasswordChange} isDisabled={isDisabled} type={"password"} placeholder={"Password"} />
+    </>
+);
 
 export default LoginInputs;

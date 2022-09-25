@@ -7,26 +7,24 @@ interface ISubmitButtonProps {
     isDisabled: boolean,
 }
 
-const SubmitButton: React.FC<ISubmitButtonProps> = ({text, onPress, isDisabled}) => {
-    return (
-        <Pressable
-            onPress={onPress}
-            disabled={isDisabled}
-            style={
-                ({pressed}) => {
-                    if (isDisabled) {
-                        return styles.submitButtonDisabled;
-                    }
-                    return pressed ? {...styles.submitButton, backgroundColor: "#2e55b7"} : styles.submitButton;
+const SubmitButton: React.FC<ISubmitButtonProps> = ({text, onPress, isDisabled}) => (
+    <Pressable
+        onPress={onPress}
+        disabled={isDisabled}
+        style={
+            ({pressed}) => {
+                if (isDisabled) {
+                    return styles.submitButtonDisabled;
                 }
+                return pressed ? {...styles.submitButton, backgroundColor: "#2e55b7"} : styles.submitButton;
             }
-        >
-            <Text style={{color: "white"}}>
-                {text}
-            </Text>
-        </Pressable>
-    );
-};
+        }
+    >
+        <Text style={{color: "white"}}>
+            {text}
+        </Text>
+    </Pressable>
+);
 
 const styles = StyleSheet.create({
     submitButton: {

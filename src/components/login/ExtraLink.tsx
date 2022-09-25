@@ -6,16 +6,14 @@ interface IExtraLinksProps {
     text: string
 }
 
-const ExtraLink: React.FC<IExtraLinksProps> = ({onPress, text}) => {
-    return (
-        <Pressable
-            onPress={onPress}
-            style={styles.extraLinks}
-        >
-            <Text style={{color: "grey", fontSize: 12 }}>{text}</Text>
-        </Pressable>
-    );
-};
+const ExtraLink: React.FC<IExtraLinksProps> = ({onPress, text}) => (
+    <Pressable
+        onPress={onPress}
+        style={styles.extraLinks}
+    >
+        <Text style={{color: "grey", fontSize: 12 }}>{text}</Text>
+    </Pressable>
+);
 
 const styles = StyleSheet.create({
     extraLinks: {

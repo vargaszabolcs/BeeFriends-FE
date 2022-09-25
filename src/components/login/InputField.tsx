@@ -10,23 +10,21 @@ interface IInputFieldProps {
     type: "email" | "password" | "name";
 }
 
-const InputField: React.FC<IInputFieldProps> = ({value, onChangeText, isDisabled, type, placeholder}) => {
-    return (
-        <TextInput
-            style={styles.inputField}
-            placeholder={placeholder}
-            value={value}
-            onChangeText={onChangeText}
-            autoCompleteType={type}
-            autoCapitalize="none"
-            autoCorrect={false}
-            textContentType={type === "email" ? "emailAddress" : type}
-            editable={!isDisabled}
-            selectTextOnFocus={!isDisabled}
-            secureTextEntry={type === "password"}
-        />
-    );
-};
+const InputField: React.FC<IInputFieldProps> = ({value, onChangeText, isDisabled, type, placeholder}) => (
+    <TextInput
+        style={styles.inputField}
+        placeholder={placeholder}
+        value={value}
+        onChangeText={onChangeText}
+        autoCompleteType={type}
+        autoCapitalize="none"
+        autoCorrect={false}
+        textContentType={type === "email" ? "emailAddress" : type}
+        editable={!isDisabled}
+        selectTextOnFocus={!isDisabled}
+        secureTextEntry={type === "password"}
+    />
+);
 
 
 const styles = StyleSheet.create({

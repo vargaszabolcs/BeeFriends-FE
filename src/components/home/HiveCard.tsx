@@ -19,17 +19,15 @@ const ColoredShape = styled.View<IColoredShapeProps>`
     background-color: ${props => props.color};
 `;
 
-const HiveCard: FC<BeehiveData> = (props) => {
-    return (
-        <Container>
-            <Text>{props.assigned_number}</Text>
-            <Text>{props.name}</Text>
-            <Text>{props.description}</Text>
-            <Text>{props.population}</Text>
-            <Text>{props.location}</Text>
-            <ColoredShape color={props.color}/>
-        </Container>
-    );
-};
+const HiveCard: FC<BeehiveData> = (props) => (
+    <Container>
+        <Text>{props.assigned_number}</Text>
+        <Text>{props.name}</Text>
+        <Text>{props.description}</Text>
+        <Text>{props.population}</Text>
+        <Text>{props.location}</Text>
+        <ColoredShape color={props.color}/>
+    </Container>
+);
 
 export default HiveCard;

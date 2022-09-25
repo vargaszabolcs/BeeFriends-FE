@@ -8,10 +8,12 @@ import { Provider } from "react-redux";
 import store from "./src/store/store";
 
 export default function App() {
-    return <SafeAreaProvider>
-        <Provider store={store}>
-            <Navigation />
-            <StatusBar />
-        </Provider>
-    </SafeAreaProvider>;
+    return (
+        <SafeAreaProvider>
+            <Provider store={store}>
+                <Navigation />
+                <StatusBar />
+            </Provider>
+        </SafeAreaProvider>
+    );
 }

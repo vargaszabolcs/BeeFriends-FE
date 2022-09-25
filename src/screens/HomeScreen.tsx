@@ -7,12 +7,10 @@ const Container = styled(SafeAreaView)`
     flex: 1;
 `;
 
-const HomeScreen = () => {
-    return (
-        <Container>
-            <HivesContainer />
-        </Container>
-    );
-};
+const HomeScreen = () => (
+    <Container>
+        <HivesContainer />
+    </Container>
+);
 
 export default HomeScreen;

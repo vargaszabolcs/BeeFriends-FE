@@ -15,14 +15,12 @@ const Icon = styled(FeatherIcon)`
     fontSize: 20px;
 `;
 
-const SettingsButton: FC<ISubmitButtonProps> = (props) => {
-    return (
-        <Button
-            onPress={props.onClick}
-        >
-            <Icon name="settings"/>
-        </Button>
-    );
-};
+const SettingsButton: FC<ISubmitButtonProps> = (props) => (
+    <Button
+        onPress={props.onClick}
+    >
+        <Icon name="settings"/>
+    </Button>
+);
 
 export default SettingsButton;
