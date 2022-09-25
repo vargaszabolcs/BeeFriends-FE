@@ -1,9 +1,13 @@
-import { Text, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 import React from "react";
+import store from "../store/store";
+import { loggedOut } from "../store/actions";
 
 const SettingsScreen = () => (
     <View>
-        <Text>SettingsScreen</Text>
+        <Pressable onPress={() => store.dispatch(loggedOut())}>
+            <Text>Log Out</Text>
+        </Pressable>
     </View>
 );
 
