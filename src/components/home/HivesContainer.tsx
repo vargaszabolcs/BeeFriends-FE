@@ -7,7 +7,6 @@ import Network from "../../constants/Network";
 import { BeehiveData, IStoreState } from "../../types";
 import HiveCard from "./HiveCard";
 
-
 const Container = styled(SafeAreaView)`
     flex: 1;
     flex-direction: column;
@@ -20,12 +19,13 @@ const HivesContainer: FC = () => {
     const userData = useSelector<IStoreState, IStoreState["userData"]>(state => state.userData);
     const getData = async () => {
         try {
-            const data: AxiosResponse<BeehiveData[]> = await axios.get(Network.API_URL + "/beehive", {headers: {"Authorization": `Bearer ${userData?.token}`}});
+            const data: AxiosResponse<BeehiveData[]> = await axios.get(
+                Network.API_URL + "/beehive",
+                { headers: { Authorization: `Bearer ${userData?.token}` } },
+            );
             setHivesData(data.data);
         } catch (error) {
             console.log(error);
-        } finally {
-            console.log("finally");
         }
     };
 
@@ -38,7 +38,7 @@ const HivesContainer: FC = () => {
             <FlatList
                 data={hivesData}
                 renderItem={({ item }) => <HiveCard {...item} />}
-                keyExtractor={(item) => item._id}
+                keyExtractor={item => item._id}
             />
         </Container>
     );
