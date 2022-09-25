@@ -1,14 +1,25 @@
 import { Pressable, Text, View } from "react-native";
 import React from "react";
-import store from "../store/store";
-import { loggedOut } from "../store/actions";
+import { useDispatch } from "react-redux";
+import { logOut } from "../store/appSlice";
+import { removeLocalData } from "../localStorage/storageHelpers";
+import { StorageKeys } from "../localStorage/storageKeys";
 
-const SettingsScreen = () => (
-    <View>
-        <Pressable onPress={() => store.dispatch(loggedOut())}>
-            <Text>Log Out</Text>
-        </Pressable>
-    </View>
-);
+const SettingsScreen = () => {
+    const dispatch = useDispatch();
+
+    const handleLogout = async () => {
+        await removeLocalData(StorageKeys.USER_DATA, true);
+        dispatch(logOut());
+    };
+
+    return (
+        <View>
+            <Pressable onPress={handleLogout.bind(this)}>
+                <Text>Log Out</Text>
+            </Pressable>
+        </View>
+    );
+};
 
 export default SettingsScreen;

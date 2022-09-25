@@ -4,7 +4,8 @@ import { FlatList, SafeAreaView } from "react-native";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import Network from "../../constants/Network";
-import { BeehiveData, IStoreState } from "../../types";
+import { RootState } from "../../store/store";
+import { BeehiveData } from "../../types";
 import HiveCard from "./HiveCard";
 
 const Container = styled(SafeAreaView)`
@@ -16,12 +17,17 @@ const Container = styled(SafeAreaView)`
 const HivesContainer: FC = () => {
     const [hivesData, setHivesData] = useState<BeehiveData[]>([]);
 
-    const userData = useSelector<IStoreState, IStoreState["userData"]>(state => state.userData);
+    const userData = useSelector((state: RootState) => state.app.userData);
     const getData = async () => {
         try {
             const data: AxiosResponse<BeehiveData[]> = await axios.get(
                 Network.API_URL + "/beehive",
-                { headers: { Authorization: `Bearer ${userData?.token}` } },
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${userData?.token}`,
+                    },
+                },
             );
             setHivesData(data.data);
         } catch (error) {

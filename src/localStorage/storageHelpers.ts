@@ -26,3 +26,15 @@ export async function getLocalData(key: StorageKeys, secure = false) {
         Promise.reject(error);
     }
 }
+
+export async function removeLocalData(key: StorageKeys, secure = false) {
+    try {
+        if (secure) {
+            await SecureStore.deleteItemAsync(key);
+        } else {
+            await AsyncStorage.removeItem(key);
+        }
+    } catch (error) {
+        console.error(error);
+    }
+}
