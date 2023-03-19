@@ -1,19 +1,32 @@
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import axios, { AxiosResponse } from "axios";
 import { useAssets } from "expo-asset";
 import React, { useState } from "react";
-import { StyleSheet, Image, ImageSourcePropType, Text } from "react-native";
+import { ImageSourcePropType } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-
+import { useDispatch } from "react-redux";
+import styled from "styled-components/native";
 import ExtraLink from "../components/login/ExtraLink";
 import LoginInputs from "../components/login/LoginInputs";
 import SubmitButton from "../components/login/SubmitButton";
 import Network from "../constants/Network";
-import { IUser, LoginResponse, LoginStackParamList } from "../types";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { saveLocalData } from "../localStorage/storageHelpers";
 import { StorageKeys } from "../localStorage/storageKeys";
-import { useDispatch } from "react-redux";
 import { logIn } from "../store/appSlice";
+import { IUser, LoginResponse, LoginStackParamList } from "../types";
+
+const Container = styled(SafeAreaView)`
+    flex: 1;
+    align-items: center;
+`;
+const Logo = styled.Image`
+    width: 300px;
+    height: 300px;
+`;
+const ErrorText = styled.Text`
+    color: "red";
+    width: "90%";
+`;
 
 type ILoginScreenProps = NativeStackScreenProps<LoginStackParamList, "Login">;
 
@@ -59,13 +72,8 @@ const LoginScreen: React.FC<ILoginScreenProps> = ({ navigation }) => {
     };
 
     return (
-        <SafeAreaView style={styles.container}>
-            {assets ? (
-                <Image
-                    source={assets[0] as ImageSourcePropType}
-                    style={styles.logo}
-                />
-            ) : null}
+        <Container>
+            {assets ? <Logo source={assets[0] as ImageSourcePropType} /> : null}
 
             <LoginInputs
                 email={email}
@@ -75,7 +83,7 @@ const LoginScreen: React.FC<ILoginScreenProps> = ({ navigation }) => {
                 isDisabled={isLoading}
             />
 
-            {error ? <Text style={styles.error}>{error}</Text> : null}
+            {error ? <ErrorText>{error}</ErrorText> : null}
 
             <SubmitButton
                 text="Login"
@@ -95,22 +103,8 @@ const LoginScreen: React.FC<ILoginScreenProps> = ({ navigation }) => {
                     navigation.navigate("Signup");
                 }}
             />
-        </SafeAreaView>
+        </Container>
     );
 };
-
-const styles = StyleSheet.create({
-    container: {
-        alignItems: "center",
-    },
-    logo: {
-        width: 300,
-        height: 300,
-    },
-    error: {
-        color: "red",
-        width: "90%",
-    },
-});
 
 export default LoginScreen;
