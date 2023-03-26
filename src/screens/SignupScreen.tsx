@@ -1,17 +1,17 @@
-import { StyleSheet, Text } from "react-native";
-import React, { useState } from "react";
-import InputField from "../components/login/InputField";
-import { SafeAreaView } from "react-native-safe-area-context";
-import SubmitButton from "../components/login/SubmitButton";
-import axios, { AxiosResponse } from "axios";
-import Network from "../constants/Network";
-import { IUser, LoginResponse, LoginStackParamList } from "../types";
-import ExtraLink from "../components/login/ExtraLink";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import axios, { AxiosResponse } from "axios";
+import React, { useState } from "react";
+import { StyleSheet, Text } from "react-native";
+import { useDispatch } from "react-redux";
+import InputField from "../components/common/InputField";
+import Screen from "../components/common/Screen";
+import ExtraLink from "../components/login/ExtraLink";
+import SubmitButton from "../components/login/SubmitButton";
+import Network from "../constants/Network";
 import { saveLocalData } from "../localStorage/storageHelpers";
 import { StorageKeys } from "../localStorage/storageKeys";
-import { useDispatch } from "react-redux";
 import { logIn } from "../store/appSlice";
+import { IUser, LoginResponse, LoginStackParamList } from "../types";
 
 type ISignupScreenProps = NativeStackScreenProps<LoginStackParamList, "Signup">;
 
@@ -106,7 +106,11 @@ const SignupScreen: React.FC<ISignupScreenProps> = ({ navigation }) => {
     };
 
     return (
-        <SafeAreaView style={styles.container}>
+        <Screen
+            hasNoHeader
+            applyPadding
+            style={styles.container}
+        >
             <Text style={styles.title}>Sign Up</Text>
             <InputField
                 value={email}
@@ -146,7 +150,7 @@ const SignupScreen: React.FC<ISignupScreenProps> = ({ navigation }) => {
                 text="I already have an account"
                 onPress={navigation.goBack}
             />
-        </SafeAreaView>
+        </Screen>
     );
 };
 

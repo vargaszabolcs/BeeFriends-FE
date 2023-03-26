@@ -18,6 +18,7 @@ import { IUser, LoginResponse, LoginStackParamList } from "../types";
 const Container = styled(SafeAreaView)`
     flex: 1;
     align-items: center;
+    padding: 20px;
 `;
 const Logo = styled.Image`
     width: 300px;

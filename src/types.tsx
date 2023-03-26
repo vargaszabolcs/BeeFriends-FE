@@ -11,6 +11,8 @@ export type LoginStackParamList = {
 export type MainStackParamList = {
     Home: undefined;
     Settings: undefined;
+    ChangePassword: undefined;
+    DeleteAccount: undefined;
 };
 
 export interface IUser {

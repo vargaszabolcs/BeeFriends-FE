@@ -1,9 +1,9 @@
-import { Pressable } from "react-native";
-import React, { FC } from "react";
-import styled from "styled-components";
 import FeatherIcon from "@expo/vector-icons/Feather";
+import React, { FC } from "react";
+import { Pressable } from "react-native";
+import styled from "styled-components";
 
-interface ISubmitButtonProps {
+interface IHeaderButtonProps {
     onClick: () => void;
 }
 
@@ -13,10 +13,10 @@ const Icon = styled(FeatherIcon)`
     font-size: 20px;
 `;
 
-const SettingsButton: FC<ISubmitButtonProps> = props => (
+const HeaderButton: FC<IHeaderButtonProps> = props => (
     <Button onPress={props.onClick}>
         <Icon name="settings" />
     </Button>
 );
 
-export default SettingsButton;
+export default HeaderButton;
