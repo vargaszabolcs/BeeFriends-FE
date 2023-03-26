@@ -6,6 +6,8 @@ export type RootStackParamList = {
 export type LoginStackParamList = {
     Login: undefined;
     Signup: undefined;
+    ForgotPassword1: undefined;
+    ForgotPassword2: undefined;
 };
 
 export type MainStackParamList = {

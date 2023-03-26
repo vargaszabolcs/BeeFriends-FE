@@ -29,9 +29,9 @@ const ErrorText = styled.Text`
     width: "90%";
 `;
 
-type ILoginScreenProps = NativeStackScreenProps<LoginStackParamList, "Login">;
+type LoginScreenProps = NativeStackScreenProps<LoginStackParamList, "Login">;
 
-const LoginScreen: React.FC<ILoginScreenProps> = ({ navigation }) => {
+const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
@@ -95,7 +95,7 @@ const LoginScreen: React.FC<ILoginScreenProps> = ({ navigation }) => {
             <ExtraLink
                 text="Forgot password?"
                 onPress={() => {
-                    console.log("forgot");
+                    navigation.navigate("ForgotPassword1");
                 }}
             />
             <ExtraLink

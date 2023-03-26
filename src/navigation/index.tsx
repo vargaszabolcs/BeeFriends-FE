@@ -39,18 +39,19 @@ function RootNavigator() {
     console.log("userData", userData);
 
     return (
-        <RootStack.Navigator initialRouteName="LoginStack">
+        <RootStack.Navigator
+            initialRouteName="LoginStack"
+            screenOptions={{ headerShown: false }}
+        >
             {!userData?.token ? (
                 <RootStack.Screen
                     name="LoginStack"
                     component={LoginScreenStack}
-                    options={{ headerShown: false }}
                 />
             ) : (
                 <RootStack.Screen
                     name="MainTabNavigator"
                     component={MainStack}
-                    options={{ headerShown: false }}
                 />
             )}
         </RootStack.Navigator>

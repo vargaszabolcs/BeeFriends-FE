@@ -2,7 +2,7 @@ import React from "react";
 import { StyleProp, StyleSheet, ViewStyle } from "react-native";
 import { Edge, SafeAreaView } from "react-native-safe-area-context";
 
-interface IScreenProps {
+interface IBFScreenProps {
     children: React.ReactNode;
     hasNoHeader?: boolean;
     isPartOfTabNav?: boolean;
@@ -10,7 +10,7 @@ interface IScreenProps {
     style?: StyleProp<ViewStyle>;
 }
 
-const Screen: React.FC<IScreenProps> = ({
+const BFScreen: React.FC<IBFScreenProps> = ({
     children,
     hasNoHeader,
     isPartOfTabNav,
@@ -35,7 +35,7 @@ const Screen: React.FC<IScreenProps> = ({
     );
 };
 
-export default Screen;
+export default BFScreen;
 
 const styles = StyleSheet.create({
     container: {

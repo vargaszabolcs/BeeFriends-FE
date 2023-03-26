@@ -1,5 +1,5 @@
 import React from "react";
-import InputField from "../common/InputField";
+import BFInputField from "../common/BFInputField";
 
 interface ILoginInputsProps {
     email: string;
@@ -17,14 +17,14 @@ const LoginInputs: React.FC<ILoginInputsProps> = ({
     isDisabled = false,
 }) => (
     <>
-        <InputField
+        <BFInputField
             value={email}
             onChangeText={onEmailChange}
             isDisabled={isDisabled}
             type={"email"}
             placeholder={"Email"}
         />
-        <InputField
+        <BFInputField
             value={password}
             onChangeText={onPasswordChange}
             isDisabled={isDisabled}

@@ -1,28 +1,32 @@
 import React from "react";
-import { StyleSheet, TextInput } from "react-native";
+import { StyleProp, StyleSheet, TextInput, TextStyle } from "react-native";
 
-interface IInputFieldProps {
+interface IBFInputFieldProps {
     value: string;
     placeholder: string;
     onChangeText: (value: string) => void;
     isDisabled?: boolean;
     type: "email" | "password" | "name";
+    autoCapitalize?: "none" | "sentences" | "words" | "characters";
+    style?: StyleProp<TextStyle>;
 }
 
-const InputField: React.FC<IInputFieldProps> = ({
+const BFInputField: React.FC<IBFInputFieldProps> = ({
     value,
     onChangeText,
     isDisabled,
     type,
     placeholder,
+    autoCapitalize,
+    style,
 }) => (
     <TextInput
-        style={styles.inputField}
+        style={[styles.inputField, style]}
         placeholder={placeholder}
         value={value}
         onChangeText={onChangeText}
         autoComplete={type}
-        autoCapitalize="none"
+        autoCapitalize={autoCapitalize}
         autoCorrect={false}
         textContentType={type === "email" ? "emailAddress" : type}
         editable={!isDisabled}
@@ -42,4 +46,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default InputField;
+export default BFInputField;

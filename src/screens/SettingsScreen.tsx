@@ -2,8 +2,8 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { useDispatch } from "react-redux";
-import Button from "../components/common/Button";
-import Title from "../components/common/Title";
+import BFButton from "../components/common/BFButton";
+import BFTitle from "../components/common/BFTitle";
 import { removeLocalData } from "../localStorage/storageHelpers";
 import { StorageKeys } from "../localStorage/storageKeys";
 import { logOut } from "../store/appSlice";
@@ -22,19 +22,19 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ navigation }) => {
     return (
         <View style={styles.container}>
             <View style={styles.section}>
-                <Title title="Settings" />
+                <BFTitle title="Settings" />
                 <Text style={styles.sectionTitle}>Account</Text>
-                <Button
+                <BFButton
                     title="Change Password"
                     onPress={() => navigation.navigate("ChangePassword")}
                 />
-                <Button
+                <BFButton
                     title="Delete Account"
                     onPress={() => navigation.navigate("DeleteAccount")}
                 />
             </View>
             <View style={styles.section}>
-                <Button
+                <BFButton
                     title="Logout"
                     onPress={handleLogout}
                 />

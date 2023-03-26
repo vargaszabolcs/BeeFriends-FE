@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
-import Button from "../components/common/Button";
-import InputField from "../components/common/InputField";
-import Title from "../components/common/Title";
+import BFButton from "../components/common/BFButton";
+import BFInputField from "../components/common/BFInputField";
+import BFTitle from "../components/common/BFTitle";
 
 const ChangePasswordScreen = () => {
     const [currentPassword, setCurrentPassword] = useState("");
@@ -14,22 +14,22 @@ const ChangePasswordScreen = () => {
 
     return (
         <View style={styles.container}>
-            <Title title="Change Password" />
-            <InputField
+            <BFTitle title="Change Password" />
+            <BFInputField
                 placeholder="Current Password"
                 type="password"
                 onChangeText={setCurrentPassword}
                 value={currentPassword}
                 isDisabled={false}
             />
-            <InputField
+            <BFInputField
                 placeholder="New Password"
                 type="password"
                 onChangeText={setNewPassword}
                 value={newPassword}
                 isDisabled={false}
             />
-            <Button
+            <BFButton
                 title={"Change Password"}
                 onPress={handleChangePasswordPress}
             />

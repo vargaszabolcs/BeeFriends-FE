@@ -13,7 +13,11 @@ export default function MainStack() {
     return (
         <MainNavigator.Navigator
             initialRouteName="Home"
-            screenOptions={{ contentStyle: { backgroundColor: "#fff" }, title: "" }}
+            screenOptions={{
+                contentStyle: { backgroundColor: "#fff" },
+                title: "",
+                headerBackTitleVisible: false,
+            }}
         >
             <MainNavigator.Screen
                 name="Home"

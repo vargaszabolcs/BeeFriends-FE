@@ -3,8 +3,8 @@ import axios, { AxiosResponse } from "axios";
 import React, { useState } from "react";
 import { StyleSheet, Text } from "react-native";
 import { useDispatch } from "react-redux";
-import InputField from "../components/common/InputField";
-import Screen from "../components/common/Screen";
+import BFInputField from "../components/common/BFInputField";
+import BFScreen from "../components/common/BFScreen";
 import ExtraLink from "../components/login/ExtraLink";
 import SubmitButton from "../components/login/SubmitButton";
 import Network from "../constants/Network";
@@ -106,34 +106,34 @@ const SignupScreen: React.FC<ISignupScreenProps> = ({ navigation }) => {
     };
 
     return (
-        <Screen
+        <BFScreen
             hasNoHeader
             applyPadding
             style={styles.container}
         >
             <Text style={styles.title}>Sign Up</Text>
-            <InputField
+            <BFInputField
                 value={email}
                 onChangeText={setEmail}
                 isDisabled={isLoading}
                 type="email"
                 placeholder="Email"
             />
-            <InputField
+            <BFInputField
                 value={password}
                 onChangeText={setPassword}
                 isDisabled={isLoading}
                 type="password"
                 placeholder="Password"
             />
-            <InputField
+            <BFInputField
                 value={passwordRepeat}
                 onChangeText={setPasswordRepeat}
                 isDisabled={isLoading}
                 type="password"
                 placeholder="Repeat Password"
             />
-            <InputField
+            <BFInputField
                 value={name}
                 onChangeText={setName}
                 isDisabled={isLoading}
@@ -150,7 +150,7 @@ const SignupScreen: React.FC<ISignupScreenProps> = ({ navigation }) => {
                 text="I already have an account"
                 onPress={navigation.goBack}
             />
-        </Screen>
+        </BFScreen>
     );
 };
 

@@ -1,16 +1,16 @@
 import React from "react";
-import { StyleProp, StyleSheet, Text, TouchableOpacity } from "react-native";
+import { StyleProp, StyleSheet, Text, TouchableOpacity, ViewStyle } from "react-native";
 
-interface IButtonProps {
+interface IBFButtonProps {
     title: string;
     onPress: () => void;
-    style?: StyleProp<TouchableOpacity>;
+    style?: StyleProp<ViewStyle>;
 }
 
-const Button: React.FC<IButtonProps> = ({ title, onPress }) => (
+const BFButton: React.FC<IBFButtonProps> = ({ title, onPress, style }) => (
     <TouchableOpacity
         onPress={onPress}
-        style={styles.button}
+        style={[styles.button, style]}
     >
         <Text style={styles.text}>{title}</Text>
     </TouchableOpacity>
@@ -37,4 +37,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Button;
+export default BFButton;
