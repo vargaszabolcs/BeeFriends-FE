@@ -23,6 +23,7 @@ const LoginInputs: React.FC<ILoginInputsProps> = ({
             isDisabled={isDisabled}
             type={"email"}
             placeholder={"Email"}
+            autoCapitalize={"none"}
         />
         <BFInputField
             value={password}
@@ -30,6 +31,7 @@ const LoginInputs: React.FC<ILoginInputsProps> = ({
             isDisabled={isDisabled}
             type={"password"}
             placeholder={"Password"}
+            autoCapitalize={"none"}
         />
     </>
 );

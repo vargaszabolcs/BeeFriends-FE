@@ -21,12 +21,14 @@ export interface IUser {
     email: string;
     token: string;
     full_name: string;
+    id: string;
 }
 
 export type LoginResponse = {
     token: string;
     email: string;
     full_name: string;
+    id: string;
     error?: string;
 };
 

@@ -5,12 +5,14 @@ interface IBFButtonProps {
     title: string;
     onPress: () => void;
     style?: StyleProp<ViewStyle>;
+    isDisabled?: boolean;
 }
 
-const BFButton: React.FC<IBFButtonProps> = ({ title, onPress, style }) => (
+const BFButton: React.FC<IBFButtonProps> = ({ title, onPress, style, isDisabled }) => (
     <TouchableOpacity
         onPress={onPress}
         style={[styles.button, style]}
+        disabled={isDisabled}
     >
         <Text style={styles.text}>{title}</Text>
     </TouchableOpacity>

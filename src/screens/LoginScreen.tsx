@@ -2,10 +2,10 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import axios, { AxiosResponse } from "axios";
 import { useAssets } from "expo-asset";
 import React, { useState } from "react";
-import { ImageSourcePropType } from "react-native";
+import { Image, ImageSourcePropType, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useDispatch } from "react-redux";
-import styled from "styled-components/native";
+import BFErrorText from "../components/common/BFErrorText";
 import ExtraLink from "../components/login/ExtraLink";
 import LoginInputs from "../components/login/LoginInputs";
 import SubmitButton from "../components/login/SubmitButton";
@@ -14,20 +14,6 @@ import { saveLocalData } from "../localStorage/storageHelpers";
 import { StorageKeys } from "../localStorage/storageKeys";
 import { logIn } from "../store/appSlice";
 import { IUser, LoginResponse, LoginStackParamList } from "../types";
-
-const Container = styled(SafeAreaView)`
-    flex: 1;
-    align-items: center;
-    padding: 20px;
-`;
-const Logo = styled.Image`
-    width: 300px;
-    height: 300px;
-`;
-const ErrorText = styled.Text`
-    color: "red";
-    width: "90%";
-`;
 
 type LoginScreenProps = NativeStackScreenProps<LoginStackParamList, "Login">;
 
@@ -55,11 +41,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
                 setIsLoading(false);
             } else {
                 setError("");
-                const userData: IUser = {
-                    token: response.data.token,
-                    email: email,
-                    full_name: response.data.full_name,
-                };
+                const userData: IUser = response.data;
                 saveLocalData(StorageKeys.USER_DATA, JSON.stringify(userData), true);
                 dispatch(logIn(userData));
             }
@@ -73,8 +55,13 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
     };
 
     return (
-        <Container>
-            {assets ? <Logo source={assets[0] as ImageSourcePropType} /> : null}
+        <SafeAreaView style={styles.container}>
+            {assets ? (
+                <Image
+                    style={styles.logo}
+                    source={assets[0] as ImageSourcePropType}
+                />
+            ) : null}
 
             <LoginInputs
                 email={email}
@@ -84,7 +71,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
                 isDisabled={isLoading}
             />
 
-            {error ? <ErrorText>{error}</ErrorText> : null}
+            <BFErrorText error={error} />
 
             <SubmitButton
                 text="Login"
@@ -104,8 +91,20 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
                     navigation.navigate("Signup");
                 }}
             />
-        </Container>
+        </SafeAreaView>
     );
 };
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        alignItems: "center",
+        padding: 20,
+    },
+    logo: {
+        width: 300,
+        height: 300,
+    },
+});
 
 export default LoginScreen;

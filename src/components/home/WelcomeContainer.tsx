@@ -1,36 +1,46 @@
 import React from "react";
+import { StyleSheet, Text, View } from "react-native";
 import { useSelector } from "react-redux";
-import styled from "styled-components/native";
 import { RootState } from "../../store/store";
-
-const Container = styled.View`
-    padding: 10px;
-`;
-
-const WelcomeTextContainer = styled.View`
-    flex-direction: row;
-`;
-
-const WelcomeText = styled.Text`
-    font-size: 20px;
-`;
-
-const WelcomeTextName = styled(WelcomeText)`
-    font-weight: bold;
-`;
+import BFTitle from "../common/BFTitle";
 
 const WelcomeContainer = () => {
     const userData = useSelector((state: RootState) => state.app.userData);
 
     return (
-        <Container>
-            <WelcomeTextContainer>
-                <WelcomeText>Welcome, </WelcomeText>
-                <WelcomeTextName>{userData?.full_name}</WelcomeTextName>
-                <WelcomeText>!</WelcomeText>
-            </WelcomeTextContainer>
-        </Container>
+        <View style={styles.container}>
+            <View style={styles.welcomeTextContainer}>
+                <Text style={styles.welcomeText}>
+                    {"Welcome, "}
+                    <Text style={styles.welcomeTextName}>{userData?.full_name}</Text>!
+                </Text>
+            </View>
+            <BFTitle
+                title={"My hives"}
+                style={styles.title}
+            />
+        </View>
     );
 };
+
+const styles = StyleSheet.create({
+    title: {
+        marginTop: 20,
+        marginBottom: 10,
+    },
+    container: {
+        padding: 10,
+    },
+    welcomeTextContainer: {
+        flexDirection: "row",
+        paddingTop: 10,
+    },
+    welcomeText: {
+        fontSize: 22,
+    },
+    welcomeTextName: {
+        fontWeight: "bold",
+    },
+});
 
 export default WelcomeContainer;

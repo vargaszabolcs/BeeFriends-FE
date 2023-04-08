@@ -87,11 +87,7 @@ const SignupScreen: React.FC<ISignupScreenProps> = ({ navigation }) => {
                 setError(response.data.error);
             } else {
                 setError("");
-                const userData: IUser = {
-                    token: response.data.token,
-                    email: email,
-                    full_name: response.data.full_name,
-                };
+                const userData: IUser = response.data;
                 saveLocalData(StorageKeys.USER_DATA, JSON.stringify(userData), true);
                 dispatch(logIn(userData));
             }
