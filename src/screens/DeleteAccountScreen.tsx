@@ -12,7 +12,7 @@ import { MainStackParamList } from "../types";
 
 type Props = NativeStackScreenProps<MainStackParamList, "DeleteAccount">;
 
-const DeleteAccountScreen: React.FC<Props> = ({ navigation }) => {
+const DeleteAccountScreen: React.FC<Props> = () => {
     const [password, setPassword] = useState("");
     const [isLoading, setIsLoading] = useState(false);
 
