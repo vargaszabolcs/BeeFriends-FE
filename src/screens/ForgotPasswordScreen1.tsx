@@ -27,7 +27,7 @@ const ForgotPasswordScreen1: React.FC<ForgotPasswordProps> = ({ navigation }) =>
                 placeholder="Email"
                 value={email}
                 onChangeText={setEmail}
-                type="email"
+                contentType="email"
                 autoCapitalize="none"
                 style={styles.input}
             />

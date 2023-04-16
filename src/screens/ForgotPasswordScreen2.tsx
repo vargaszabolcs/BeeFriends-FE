@@ -26,14 +26,14 @@ export const ForgotPasswordScreen2: React.FC = () => {
                 value={token}
                 onChangeText={setToken}
                 style={styles.input}
-                type={"name"}
+                contentType={"name"}
             />
             <Text style={styles.instructions}>Enter a new password:</Text>
             <BFInputField
                 placeholder="New Password"
                 value={password}
                 onChangeText={setPassword}
-                type="name"
+                contentType="name"
                 style={styles.input}
             />
             <BFButton

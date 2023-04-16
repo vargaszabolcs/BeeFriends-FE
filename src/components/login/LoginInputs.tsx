@@ -21,7 +21,7 @@ const LoginInputs: React.FC<ILoginInputsProps> = ({
             value={email}
             onChangeText={onEmailChange}
             isDisabled={isDisabled}
-            type={"email"}
+            contentType={"email"}
             placeholder={"Email"}
             autoCapitalize={"none"}
         />
@@ -29,7 +29,7 @@ const LoginInputs: React.FC<ILoginInputsProps> = ({
             value={password}
             onChangeText={onPasswordChange}
             isDisabled={isDisabled}
-            type={"password"}
+            contentType={"password"}
             placeholder={"Password"}
             autoCapitalize={"none"}
         />

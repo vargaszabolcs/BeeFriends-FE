@@ -56,7 +56,7 @@ const DeleteAccountScreen: React.FC<Props> = () => {
                 placeholder="Current Password"
                 value={password}
                 onChangeText={setPassword}
-                type="password"
+                contentType="password"
                 isDisabled={isLoading}
                 autoCapitalize="none"
             />

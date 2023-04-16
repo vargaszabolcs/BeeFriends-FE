@@ -4,6 +4,7 @@ import HeaderButton from "../components/HeaderButton";
 import ChangePasswordScreen from "../screens/ChangePasswordScreen";
 import DeleteAccountScreen from "../screens/DeleteAccountScreen";
 import HomeScreen from "../screens/HomeScreen";
+import NewHiveScreen from "../screens/NewHiveScreen";
 import SettingsScreen from "../screens/SettingsScreen";
 import { MainStackParamList } from "../types";
 
@@ -32,6 +33,10 @@ export default function MainStack() {
                         />
                     ),
                 })}
+            />
+            <MainNavigator.Screen
+                name="NewHive"
+                component={NewHiveScreen}
             />
             <MainNavigator.Screen
                 name="Settings"

@@ -5,7 +5,6 @@ import { colors } from "../../constants/Colors";
 import { BeehiveData } from "../../types";
 
 const Container = styled.View`
-    margin-bottom: 10px;
     padding: 10px;
     background-color: #d3d3d3;
     border-radius: 5px;
@@ -52,7 +51,9 @@ const DetailsValue = styled.Text`
 
 const HiveCard: FC<BeehiveData> = props => (
     <Container>
-        <BigNumber>{props.assigned_number}</BigNumber>
+        <BigNumber>
+            {props.assigned_number < 10 ? `0${props.assigned_number}` : props.assigned_number}
+        </BigNumber>
         <Details>
             <Name>{props.name}</Name>
             {props.description && <Text>{props.description}</Text>}

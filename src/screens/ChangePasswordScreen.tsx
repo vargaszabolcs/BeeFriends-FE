@@ -56,14 +56,14 @@ const ChangePasswordScreen: React.FC<Props> = ({ navigation }) => {
             <BFTitle title="Change Password" />
             <BFInputField
                 placeholder="Current Password"
-                type="password"
+                contentType="password"
                 onChangeText={setCurrentPassword}
                 value={currentPassword}
                 isDisabled={isLoading}
             />
             <BFInputField
                 placeholder="New Password"
-                type="password"
+                contentType="password"
                 onChangeText={setNewPassword}
                 value={newPassword}
                 isDisabled={isLoading}

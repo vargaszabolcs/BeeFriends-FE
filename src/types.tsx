@@ -12,6 +12,7 @@ export type AuthStackParamList = {
 
 export type MainStackParamList = {
     Home: undefined;
+    NewHive: undefined;
     Settings: undefined;
     ChangePassword: undefined;
     DeleteAccount: undefined;

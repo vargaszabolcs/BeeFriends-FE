@@ -3,7 +3,6 @@ import React, { FC, useEffect, useState } from "react";
 import { FlatList, StyleSheet, Text, View } from "react-native";
 import apiClient from "../../network/apiClient";
 import { BeehiveData } from "../../types";
-import BFButton from "../common/BFButton";
 import BFTitle from "../common/BFTitle";
 import HiveCard from "./HiveCard";
 
@@ -38,10 +37,6 @@ const HivesContainer: FC = () => {
             ) : (
                 <Text>You haven&apos;t added a hive yet. Click the button to start buzzing!</Text>
             )}
-            <BFButton
-                title={"Add new hive"}
-                onPress={() => console.log("Add new hive")}
-            />
         </View>
     );
 };
@@ -53,6 +48,7 @@ const styles = StyleSheet.create({
     },
     container: {
         flexDirection: "column",
+        flex: 1,
     },
 });
 

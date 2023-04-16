@@ -108,28 +108,28 @@ const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
                 value={email}
                 onChangeText={setEmail}
                 isDisabled={isLoading}
-                type="email"
+                contentType="email"
                 placeholder="Email"
             />
             <BFInputField
                 value={password}
                 onChangeText={setPassword}
                 isDisabled={isLoading}
-                type="password"
+                contentType="password"
                 placeholder="Password"
             />
             <BFInputField
                 value={passwordRepeat}
                 onChangeText={setPasswordRepeat}
                 isDisabled={isLoading}
-                type="password"
+                contentType="password"
                 placeholder="Repeat Password"
             />
             <BFInputField
                 value={name}
                 onChangeText={setName}
                 isDisabled={isLoading}
-                type="name"
+                contentType="name"
                 placeholder="Name"
             />
             {error ? <Text style={styles.error}>{error}</Text> : null}
