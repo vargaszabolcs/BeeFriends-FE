@@ -5,9 +5,9 @@ import BFButton from "../components/common/BFButton";
 import BFInputField from "../components/common/BFInputField";
 import BFScreen from "../components/common/BFScreen";
 import BFTitle from "../components/common/BFTitle";
-import { LoginStackParamList } from "../types";
+import { AuthStackParamList } from "../types";
 
-type ForgotPasswordProps = NativeStackScreenProps<LoginStackParamList, "ForgotPassword1">;
+type ForgotPasswordProps = NativeStackScreenProps<AuthStackParamList, "ForgotPassword1">;
 
 const ForgotPasswordScreen1: React.FC<ForgotPasswordProps> = ({ navigation }) => {
     const [email, setEmail] = useState("");

@@ -1,5 +1,5 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import axios, { AxiosResponse } from "axios";
+import { AxiosResponse } from "axios";
 import React, { useState } from "react";
 import { StyleSheet, Text } from "react-native";
 import { useDispatch } from "react-redux";
@@ -7,15 +7,13 @@ import BFInputField from "../components/common/BFInputField";
 import BFScreen from "../components/common/BFScreen";
 import ExtraLink from "../components/login/ExtraLink";
 import SubmitButton from "../components/login/SubmitButton";
-import Network from "../constants/Network";
-import { saveLocalData } from "../localStorage/storageHelpers";
-import { StorageKeys } from "../localStorage/storageKeys";
-import { logIn } from "../store/appSlice";
-import { IUser, LoginResponse, LoginStackParamList } from "../types";
+import apiClient from "../network/apiClient";
+import { logIn } from "../store/authSlice";
+import { AuthStackParamList, IUser, LoginResponse } from "../types";
 
-type ISignupScreenProps = NativeStackScreenProps<LoginStackParamList, "Signup">;
+type SignupScreenProps = NativeStackScreenProps<AuthStackParamList, "Signup">;
 
-const SignupScreen: React.FC<ISignupScreenProps> = ({ navigation }) => {
+const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [passwordRepeat, setPasswordRepeat] = useState("");
@@ -77,10 +75,9 @@ const SignupScreen: React.FC<ISignupScreenProps> = ({ navigation }) => {
 
         const data = { email, password, full_name: name };
         try {
-            const response: AxiosResponse<LoginResponse> = await axios.post(
-                Network.API_URL + "/auth/signup",
+            const response: AxiosResponse<LoginResponse> = await apiClient.post(
+                "/auth/signup",
                 data,
-                { timeout: 5000 },
             );
 
             if (response.data.error) {
@@ -88,7 +85,6 @@ const SignupScreen: React.FC<ISignupScreenProps> = ({ navigation }) => {
             } else {
                 setError("");
                 const userData: IUser = response.data;
-                saveLocalData(StorageKeys.USER_DATA, JSON.stringify(userData), true);
                 dispatch(logIn(userData));
             }
             setIsLoading(false);

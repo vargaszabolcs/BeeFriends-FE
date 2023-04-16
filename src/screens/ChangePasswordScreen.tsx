@@ -5,7 +5,7 @@ import { useDispatch, useStore } from "react-redux";
 import BFButton from "../components/common/BFButton";
 import BFInputField from "../components/common/BFInputField";
 import BFTitle from "../components/common/BFTitle";
-import { changePasswordAsync } from "../store/appSlice";
+import { changePasswordAsync } from "../store/authSlice";
 import { AppDispatch, RootState } from "../store/store";
 import { MainStackParamList } from "../types";
 

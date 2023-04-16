@@ -4,9 +4,7 @@ import { StyleSheet, Text, View } from "react-native";
 import { useDispatch } from "react-redux";
 import BFButton from "../components/common/BFButton";
 import BFTitle from "../components/common/BFTitle";
-import { removeLocalData } from "../localStorage/storageHelpers";
-import { StorageKeys } from "../localStorage/storageKeys";
-import { logOut } from "../store/appSlice";
+import { logOut } from "../store/authSlice";
 import { MainStackParamList } from "../types";
 
 type SettingsScreenProps = NativeStackScreenProps<MainStackParamList, "Settings">;
@@ -15,7 +13,6 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ navigation }) => {
     const dispatch = useDispatch();
 
     const handleLogout = async () => {
-        await removeLocalData(StorageKeys.USER_DATA, true);
         dispatch(logOut());
     };
 

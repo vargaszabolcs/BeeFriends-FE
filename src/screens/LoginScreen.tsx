@@ -1,5 +1,5 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import axios, { AxiosResponse } from "axios";
+import { AxiosResponse } from "axios";
 import { useAssets } from "expo-asset";
 import React, { useState } from "react";
 import { Image, ImageSourcePropType, StyleSheet } from "react-native";
@@ -9,13 +9,11 @@ import BFErrorText from "../components/common/BFErrorText";
 import ExtraLink from "../components/login/ExtraLink";
 import LoginInputs from "../components/login/LoginInputs";
 import SubmitButton from "../components/login/SubmitButton";
-import Network from "../constants/Network";
-import { saveLocalData } from "../localStorage/storageHelpers";
-import { StorageKeys } from "../localStorage/storageKeys";
-import { logIn } from "../store/appSlice";
-import { IUser, LoginResponse, LoginStackParamList } from "../types";
+import apiClient from "../network/apiClient";
+import { logIn } from "../store/authSlice";
+import { AuthStackParamList, IUser, LoginResponse } from "../types";
 
-type LoginScreenProps = NativeStackScreenProps<LoginStackParamList, "Login">;
+type LoginScreenProps = NativeStackScreenProps<AuthStackParamList, "Login">;
 
 const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
     const [email, setEmail] = useState("");
@@ -31,10 +29,9 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
         setIsLoading(true);
         const data = { email, password };
         try {
-            const response: AxiosResponse<LoginResponse> = await axios.post(
-                Network.API_URL + "/auth/login",
+            const response: AxiosResponse<LoginResponse> = await apiClient.post(
+                "/auth/login",
                 data,
-                { timeout: 5000 },
             );
             if (response.data.error) {
                 setError(response.data.error);
@@ -42,7 +39,6 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
             } else {
                 setError("");
                 const userData: IUser = response.data;
-                saveLocalData(StorageKeys.USER_DATA, JSON.stringify(userData), true);
                 dispatch(logIn(userData));
             }
         } catch (err) {

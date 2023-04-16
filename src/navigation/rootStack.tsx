@@ -5,11 +5,10 @@ import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { getLocalData } from "../localStorage/storageHelpers";
 import { StorageKeys } from "../localStorage/storageKeys";
-import { logIn } from "../store/appSlice";
+import { logIn } from "../store/authSlice";
 import { RootState, store } from "../store/store";
-
 import { RootStackParamList } from "../types";
-import LoginScreenStack from "./loginStack";
+import LoginScreenStack from "./authStack";
 import MainStack from "./mainStack";
 
 export default function Navigation() {
@@ -20,37 +19,37 @@ export default function Navigation() {
     );
 }
 
-const checkLocalStorageForUserData = async () => {
-    const userData = await getLocalData(StorageKeys.USER_DATA, true);
-    if (userData) {
-        store.dispatch(logIn(JSON.parse(userData)));
-    }
-};
-
 const RootStack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
     useEffect(() => {
+        const checkLocalStorageForUserData = async () => {
+            const userData = await getLocalData(StorageKeys.USER_DATA, true);
+            if (userData) {
+                store.dispatch(logIn(JSON.parse(userData)));
+            }
+        };
+
         checkLocalStorageForUserData();
     }, []);
 
     const userData = useSelector((state: RootState) => state.app.userData);
 
-    console.log("userData", userData);
+    // console.log("userData", userData);
 
     return (
         <RootStack.Navigator
-            initialRouteName="LoginStack"
+            initialRouteName="AuthStack"
             screenOptions={{ headerShown: false }}
         >
             {!userData?.token ? (
                 <RootStack.Screen
-                    name="LoginStack"
+                    name="AuthStack"
                     component={LoginScreenStack}
                 />
             ) : (
                 <RootStack.Screen
-                    name="MainTabNavigator"
+                    name="MainTabStack"
                     component={MainStack}
                 />
             )}

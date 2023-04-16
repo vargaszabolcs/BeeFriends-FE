@@ -2,31 +2,35 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import Network from "../constants/Network";
+import { removeLocalData, saveLocalData } from "../localStorage/storageHelpers";
+import { StorageKeys } from "../localStorage/storageKeys";
 import { IUser } from "../types";
 import { AppDispatch } from "./store";
 
-export interface IAppState {
+export interface IAuthState {
     userData: IUser | undefined;
 }
 
-const initialState: IAppState = {
+const initialState: IAuthState = {
     userData: undefined,
 };
 
-export const appSlice = createSlice({
-    name: "app",
+export const authSlice = createSlice({
+    name: "auth",
     initialState,
     reducers: {
         logIn: (state, action: PayloadAction<IUser>) => {
+            saveLocalData(StorageKeys.USER_DATA, JSON.stringify(action.payload), true);
             state.userData = action.payload;
         },
         logOut: state => {
+            removeLocalData(StorageKeys.USER_DATA, true);
             state.userData = undefined;
         },
     },
 });
 
-export const { logIn, logOut } = appSlice.actions;
+export const { logIn, logOut } = authSlice.actions;
 
 export const changePasswordAsync =
     (userId: string, oldPassword: string, newPassword: string) => async () => {
@@ -71,4 +75,4 @@ export const deleteAccountAsync =
         }
     };
 
-export default appSlice.reducer;
+export default authSlice.reducer;

@@ -1,9 +1,9 @@
 export type RootStackParamList = {
-    LoginStack: LoginStackParamList;
-    MainTabNavigator: MainStackParamList;
+    AuthStack: AuthStackParamList;
+    MainTabStack: MainStackParamList;
 };
 
-export type LoginStackParamList = {
+export type AuthStackParamList = {
     Login: undefined;
     Signup: undefined;
     ForgotPassword1: undefined;

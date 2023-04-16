@@ -1,10 +1,7 @@
-import axios, { AxiosResponse } from "axios";
+import { AxiosResponse } from "axios";
 import React, { FC, useEffect, useState } from "react";
 import { FlatList, StyleSheet, Text, View } from "react-native";
-import { useSelector } from "react-redux";
-import Network from "../../constants/Network";
 import apiClient from "../../network/apiClient";
-import { RootState } from "../../store/store";
 import { BeehiveData } from "../../types";
 import BFButton from "../common/BFButton";
 import BFTitle from "../common/BFTitle";
@@ -12,8 +9,6 @@ import HiveCard from "./HiveCard";
 
 const HivesContainer: FC = () => {
     const [hivesData, setHivesData] = useState<BeehiveData[]>([]);
-
-    const userData = useSelector((state: RootState) => state.app.userData);
 
     useEffect(() => {
         const getData = async () => {

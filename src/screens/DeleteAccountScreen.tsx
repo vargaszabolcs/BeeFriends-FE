@@ -6,7 +6,7 @@ import BFButton from "../components/common/BFButton";
 import BFInputField from "../components/common/BFInputField";
 import BFScreen from "../components/common/BFScreen";
 import BFTitle from "../components/common/BFTitle";
-import { deleteAccountAsync } from "../store/appSlice";
+import { deleteAccountAsync } from "../store/authSlice";
 import { AppDispatch, RootState } from "../store/store";
 import { MainStackParamList } from "../types";
 
