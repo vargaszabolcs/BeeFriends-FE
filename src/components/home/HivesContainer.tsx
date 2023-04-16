@@ -1,65 +1,63 @@
 import axios, { AxiosResponse } from "axios";
 import React, { FC, useEffect, useState } from "react";
-import { FlatList, SafeAreaView, StyleSheet } from "react-native";
+import { FlatList, StyleSheet, Text, View } from "react-native";
 import { useSelector } from "react-redux";
-import styled from "styled-components";
 import Network from "../../constants/Network";
+import apiClient from "../../network/apiClient";
 import { RootState } from "../../store/store";
 import { BeehiveData } from "../../types";
+import BFButton from "../common/BFButton";
 import BFTitle from "../common/BFTitle";
 import HiveCard from "./HiveCard";
-
-const Container = styled(SafeAreaView)`
-    flex: 1;
-    flex-direction: column;
-    padding: 10px;
-`;
 
 const HivesContainer: FC = () => {
     const [hivesData, setHivesData] = useState<BeehiveData[]>([]);
 
     const userData = useSelector((state: RootState) => state.app.userData);
-    const getData = async () => {
-        try {
-            const data: AxiosResponse<BeehiveData[]> = await axios.get(
-                Network.API_URL + "/beehive",
-                {
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: `Bearer ${userData?.token}`,
-                    },
-                },
-            );
-            setHivesData(data.data);
-        } catch (error) {
-            console.log(error);
-        }
-    };
 
     useEffect(() => {
+        const getData = async () => {
+            try {
+                const data: AxiosResponse<BeehiveData[]> = await apiClient.get("/beehive");
+                setHivesData(data.data);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+
         getData();
     }, []);
 
     return (
-        <Container>
+        <View style={styles.container}>
             <BFTitle
                 title={"My hives"}
                 style={styles.title}
             />
-            <FlatList
-                data={hivesData}
-                renderItem={({ item }) => <HiveCard {...item} />}
-                keyExtractor={item => item._id}
+            {hivesData.length > 0 ? (
+                <FlatList
+                    data={hivesData}
+                    renderItem={({ item }) => <HiveCard {...item} />}
+                    keyExtractor={item => item._id}
+                />
+            ) : (
+                <Text>You haven&apos;t added a hive yet. Click the button to start buzzing!</Text>
+            )}
+            <BFButton
+                title={"Add new hive"}
+                onPress={() => console.log("Add new hive")}
             />
-        </Container>
+        </View>
     );
 };
 
 const styles = StyleSheet.create({
     title: {
-        marginLeft: 10,
         marginTop: 20,
         marginBottom: 10,
+    },
+    container: {
+        flexDirection: "column",
     },
 });
 
