@@ -1,12 +1,16 @@
 import { AxiosResponse } from "axios";
 import React, { FC, useEffect, useState } from "react";
-import { FlatList, StyleSheet, Text, View } from "react-native";
+import { FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import apiClient from "../../network/apiClient";
 import { BeehiveData } from "../../types";
 import BFTitle from "../common/BFTitle";
 import HiveCard from "./HiveCard";
 
-const HivesContainer: FC = () => {
+type Props = {
+    onHivePress: (hive: BeehiveData) => void;
+};
+
+const HivesContainer: FC<Props> = ({ onHivePress }) => {
     const [hivesData, setHivesData] = useState<BeehiveData[]>([]);
 
     useEffect(() => {
@@ -31,7 +35,11 @@ const HivesContainer: FC = () => {
             {hivesData.length > 0 ? (
                 <FlatList
                     data={hivesData}
-                    renderItem={({ item }) => <HiveCard {...item} />}
+                    renderItem={({ item }) => (
+                        <TouchableOpacity onPress={() => onHivePress(item)}>
+                            <HiveCard {...item} />
+                        </TouchableOpacity>
+                    )}
                     keyExtractor={item => item._id}
                 />
             ) : (

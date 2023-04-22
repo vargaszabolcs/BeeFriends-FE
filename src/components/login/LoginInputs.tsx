@@ -1,4 +1,5 @@
 import React from "react";
+import { View } from "react-native";
 import BFInputField from "../common/BFInputField";
 
 interface ILoginInputsProps {
@@ -16,7 +17,7 @@ const LoginInputs: React.FC<ILoginInputsProps> = ({
     onPasswordChange,
     isDisabled = false,
 }) => (
-    <>
+    <View style={{ width: "100%" }}>
         <BFInputField
             value={email}
             onChangeText={onEmailChange}
@@ -33,7 +34,7 @@ const LoginInputs: React.FC<ILoginInputsProps> = ({
             placeholder={"Password"}
             autoCapitalize={"none"}
         />
-    </>
+    </View>
 );
 
 export default LoginInputs;

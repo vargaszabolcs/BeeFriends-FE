@@ -3,9 +3,9 @@ import { AxiosResponse } from "axios";
 import { useAssets } from "expo-asset";
 import React, { useState } from "react";
 import { Image, ImageSourcePropType, StyleSheet } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { useDispatch } from "react-redux";
 import BFErrorText from "../components/common/BFErrorText";
+import BFScreen from "../components/common/BFScreen";
 import ExtraLink from "../components/login/ExtraLink";
 import LoginInputs from "../components/login/LoginInputs";
 import SubmitButton from "../components/login/SubmitButton";
@@ -51,7 +51,11 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
     };
 
     return (
-        <SafeAreaView style={styles.container}>
+        <BFScreen
+            style={styles.container}
+            applyPadding
+            hasNoHeader
+        >
             {assets ? (
                 <Image
                     style={styles.logo}
@@ -87,7 +91,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
                     navigation.navigate("Signup");
                 }}
             />
-        </SafeAreaView>
+        </BFScreen>
     );
 };
 
@@ -95,7 +99,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: "center",
-        padding: 20,
+        // padding: 20,
     },
     logo: {
         width: 300,

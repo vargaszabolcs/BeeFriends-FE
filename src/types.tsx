@@ -13,6 +13,7 @@ export type AuthStackParamList = {
 export type MainStackParamList = {
     Home: undefined;
     NewHive: undefined;
+    HiveDetails: { hive: BeehiveData };
     Settings: undefined;
     ChangePassword: undefined;
     DeleteAccount: undefined;
