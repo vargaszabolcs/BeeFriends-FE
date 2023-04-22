@@ -3,6 +3,7 @@ import React from "react";
 import HeaderButton from "../components/HeaderButton";
 import ChangePasswordScreen from "../screens/ChangePasswordScreen";
 import DeleteAccountScreen from "../screens/DeleteAccountScreen";
+import EditHiveScreen from "../screens/EditHiveScreen";
 import HiveDetailsScreen from "../screens/HiveDetailsScreen";
 import HomeScreen from "../screens/HomeScreen";
 import NewHiveScreen from "../screens/NewHiveScreen";
@@ -42,6 +43,10 @@ export default function MainStack() {
             <MainNavigator.Screen
                 name="HiveDetails"
                 component={HiveDetailsScreen}
+            />
+            <MainNavigator.Screen
+                name="EditHive"
+                component={EditHiveScreen}
             />
             <MainNavigator.Screen
                 name="Settings"

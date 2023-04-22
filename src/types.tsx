@@ -14,6 +14,7 @@ export type MainStackParamList = {
     Home: undefined;
     NewHive: undefined;
     HiveDetails: { hive: BeehiveData };
+    EditHive: { hiveId: string };
     Settings: undefined;
     ChangePassword: undefined;
     DeleteAccount: undefined;

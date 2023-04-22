@@ -1,22 +1,20 @@
 import FeatherIcon from "@expo/vector-icons/Feather";
 import React, { FC } from "react";
-import { Pressable } from "react-native";
+import { TouchableOpacity } from "react-native";
 import styled from "styled-components";
 
 interface IHeaderButtonProps {
     onClick: () => void;
 }
 
-const Button = styled(Pressable)``;
-
 const Icon = styled(FeatherIcon)`
-    font-size: 20px;
+    font-size: 22px;
 `;
 
 const HeaderButton: FC<IHeaderButtonProps> = props => (
-    <Button onPress={props.onClick}>
+    <TouchableOpacity onPress={props.onClick}>
         <Icon name="settings" />
-    </Button>
+    </TouchableOpacity>
 );
 
 export default HeaderButton;

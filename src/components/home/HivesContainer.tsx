@@ -12,17 +12,20 @@ type Props = {
 
 const HivesContainer: FC<Props> = ({ onHivePress }) => {
     const [hivesData, setHivesData] = useState<BeehiveData[]>([]);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+
+    const getData = async () => {
+        try {
+            setIsLoading(true);
+            const data: AxiosResponse<BeehiveData[]> = await apiClient.get("/beehive");
+            setHivesData(data.data);
+        } catch (error) {
+            console.log(error);
+        }
+        setIsLoading(false);
+    };
 
     useEffect(() => {
-        const getData = async () => {
-            try {
-                const data: AxiosResponse<BeehiveData[]> = await apiClient.get("/beehive");
-                setHivesData(data.data);
-            } catch (error) {
-                console.log(error);
-            }
-        };
-
         getData();
     }, []);
 
@@ -41,6 +44,8 @@ const HivesContainer: FC<Props> = ({ onHivePress }) => {
                         </TouchableOpacity>
                     )}
                     keyExtractor={item => item._id}
+                    onRefresh={getData}
+                    refreshing={isLoading}
                 />
             ) : (
                 <Text>You haven&apos;t added a hive yet. Click the button to start buzzing!</Text>
