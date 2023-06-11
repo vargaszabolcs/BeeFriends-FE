@@ -1,7 +1,7 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { AxiosResponse } from "axios";
 import React, { useState } from "react";
-import { StyleSheet, Text } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { useDispatch } from "react-redux";
 import BFInputField from "../components/common/BFInputField";
 import BFScreen from "../components/common/BFScreen";
@@ -101,7 +101,6 @@ const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
         <BFScreen
             hasNoHeader
             applyPadding
-            style={styles.container}
         >
             <Text style={styles.title}>Sign Up</Text>
             <BFInputField
@@ -138,18 +137,17 @@ const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
                 onPress={onSubmit}
                 isDisabled={isLoading}
             />
-            <ExtraLink
-                text="I already have an account"
-                onPress={navigation.goBack}
-            />
+            <View style={styles.textContainer}>
+                <ExtraLink
+                    text="I already have an account"
+                    onPress={navigation.goBack}
+                />
+            </View>
         </BFScreen>
     );
 };
 
 const styles = StyleSheet.create({
-    container: {
-        alignItems: "center",
-    },
     title: {
         fontSize: 30,
         fontWeight: "bold",
@@ -158,6 +156,9 @@ const styles = StyleSheet.create({
     error: {
         color: "red",
         width: "90%",
+    },
+    textContainer: {
+        alignItems: "center",
     },
 });
 
