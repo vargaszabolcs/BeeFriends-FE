@@ -18,6 +18,7 @@ export type MainStackParamList = {
     Settings: undefined;
     ChangePassword: undefined;
     DeleteAccount: undefined;
+    NewRecord: { hiveId: string };
 };
 
 export interface IUser {
@@ -44,4 +45,12 @@ export type BeehiveData = {
     assigned_number: number;
     population: number;
     birthday: string;
+};
+
+export type RecordData = {
+    _id: string;
+    type: "harvest" | "feeding" | "inspection" | "treatment" | "other";
+    amount: number;
+    date: Date;
+    description: string;
 };

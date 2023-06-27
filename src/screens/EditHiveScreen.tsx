@@ -1,7 +1,7 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React, { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { Alert, ScrollView, StyleSheet } from "react-native";
+import { Alert, ScrollView } from "react-native";
 import BFButton from "../components/common/BFButton";
 import BFInputField from "../components/common/BFInputField";
 import BFScreen from "../components/common/BFScreen";
@@ -165,5 +165,3 @@ const EditHiveScreen: React.FC<Props> = ({ navigation, route }) => {
 };
 
 export default EditHiveScreen;
-
-const styles = StyleSheet.create({});

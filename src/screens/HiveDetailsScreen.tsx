@@ -1,10 +1,13 @@
 import Feather from "@expo/vector-icons/Feather";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import React from "react";
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { AxiosResponse } from "axios";
+import React, { useEffect } from "react";
+import { FlatList, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import BFButton from "../components/common/BFButton";
 import BFScreen from "../components/common/BFScreen";
 import BFTitle from "../components/common/BFTitle";
-import { MainStackParamList } from "../types";
+import apiClient from "../network/apiClient";
+import { MainStackParamList, RecordData } from "../types";
 
 type Props = NativeStackScreenProps<MainStackParamList, "HiveDetails">;
 
@@ -14,6 +17,24 @@ const HiveDetailsScreen: React.FC<Props> = ({
     },
     navigation,
 }) => {
+    const [records, setRecords] = React.useState<RecordData[]>([]);
+
+    useEffect(() => {
+        const getRecords = async () => {
+            const records: AxiosResponse<RecordData[]> = await apiClient.get(
+                `/beehive/${hive._id}/records`,
+            );
+            setRecords(records.data);
+
+            console.log(
+                "🚀 ~ file: HiveDetailsScreen.tsx:30 ~ getRecords ~ records.data:",
+                records.data,
+            );
+        };
+
+        getRecords();
+    }, []);
+
     navigation.setOptions({
         headerRight: () => (
             <TouchableOpacity onPress={() => navigation.navigate("EditHive", { hiveId: hive._id })}>
@@ -25,6 +46,7 @@ const HiveDetailsScreen: React.FC<Props> = ({
             </TouchableOpacity>
         ),
     });
+
     return (
         <BFScreen applyPadding>
             <ScrollView>
@@ -56,8 +78,29 @@ const HiveDetailsScreen: React.FC<Props> = ({
                             {new Date(hive.birthday).toLocaleDateString()}
                         </Text>
                     </View>
+                    <BFTitle
+                        title={"Records"}
+                        style={{ marginTop: 25, marginBottom: 5, fontSize: 22 }}
+                    />
+                    <BFButton
+                        title={"Add new record"}
+                        onPress={() => navigation.navigate("NewRecord", { hiveId: hive._id })}
+                    />
                 </View>
             </ScrollView>
+            <FlatList
+                data={records}
+                renderItem={({ item }) => (
+                    <View style={styles.row}>
+                        <Text style={styles.label}>{item.date.toISOString()}</Text>
+                        <Text style={styles.value}>{item.description}</Text>
+                    </View>
+                )}
+                keyExtractor={item => item._id}
+                ListEmptyComponent={() => (
+                    <Text style={{ textAlign: "center", marginTop: 20 }}>No records found</Text>
+                )}
+            />
         </BFScreen>
     );
 };

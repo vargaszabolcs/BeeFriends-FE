@@ -7,6 +7,7 @@ import EditHiveScreen from "../screens/EditHiveScreen";
 import HiveDetailsScreen from "../screens/HiveDetailsScreen";
 import HomeScreen from "../screens/HomeScreen";
 import NewHiveScreen from "../screens/NewHiveScreen";
+import NewRecordScreen from "../screens/NewRecordScreen";
 import SettingsScreen from "../screens/SettingsScreen";
 import { MainStackParamList } from "../types";
 
@@ -59,6 +60,10 @@ export default function MainStack() {
             <MainNavigator.Screen
                 name="DeleteAccount"
                 component={DeleteAccountScreen}
+            />
+            <MainNavigator.Screen
+                name="NewRecord"
+                component={NewRecordScreen}
             />
         </MainNavigator.Navigator>
     );
