@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/native";
 import { AxiosResponse } from "axios";
 import React, { FC, useEffect, useState } from "react";
 import { FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
@@ -25,9 +26,17 @@ const HivesContainer: FC<Props> = ({ onHivePress }) => {
         setIsLoading(false);
     };
 
+    const navigation = useNavigation();
+
     useEffect(() => {
-        getData();
-    }, []);
+        const unsubscribe = navigation.addListener("focus", async () => {
+            // do it in the BG
+            const data: AxiosResponse<BeehiveData[]> = await apiClient.get("/beehive");
+            setHivesData(data.data);
+        });
+
+        return unsubscribe;
+    }, [getData, navigation]);
 
     return (
         <View style={styles.container}>

@@ -54,3 +54,11 @@ export type RecordData = {
     date: Date;
     description: string;
 };
+
+export enum RecordType {
+    HARVEST = "Harvest",
+    FEEDING = "Feeding",
+    INSPECTION = "Inspection",
+    TREATMENT = "Treatment",
+    OTHER = "Other",
+}

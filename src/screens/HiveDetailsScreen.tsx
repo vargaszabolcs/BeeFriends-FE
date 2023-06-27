@@ -1,13 +1,13 @@
 import Feather from "@expo/vector-icons/Feather";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { AxiosResponse } from "axios";
-import React, { useEffect } from "react";
-import { FlatList, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import React, { useCallback, useEffect, useMemo } from "react";
+import { Alert, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import BFButton from "../components/common/BFButton";
 import BFScreen from "../components/common/BFScreen";
 import BFTitle from "../components/common/BFTitle";
 import apiClient from "../network/apiClient";
-import { MainStackParamList, RecordData } from "../types";
+import { BeehiveData, MainStackParamList, RecordData } from "../types";
 
 type Props = NativeStackScreenProps<MainStackParamList, "HiveDetails">;
 
@@ -18,21 +18,29 @@ const HiveDetailsScreen: React.FC<Props> = ({
     navigation,
 }) => {
     const [records, setRecords] = React.useState<RecordData[]>([]);
+    const [currentHive, setCurrentHive] = React.useState(hive);
+
+    const getRecords = useCallback(async () => {
+        const data: AxiosResponse<BeehiveData> = await apiClient.get(`/beehive/${hive._id}`);
+        setCurrentHive(data.data);
+
+        const records: AxiosResponse<RecordData[]> = await apiClient.get(
+            `/beehive/${hive._id}/records`,
+        );
+        setRecords(records.data);
+
+        console.log(
+            "🚀 ~ file: HiveDetailsScreen.tsx:30 ~ getRecords ~ records.data:",
+            records.data,
+        );
+    }, [hive._id, setRecords, setCurrentHive]);
 
     useEffect(() => {
-        const getRecords = async () => {
-            const records: AxiosResponse<RecordData[]> = await apiClient.get(
-                `/beehive/${hive._id}/records`,
-            );
-            setRecords(records.data);
+        const unsubscribe = navigation.addListener("focus", () => {
+            getRecords();
+        });
 
-            console.log(
-                "🚀 ~ file: HiveDetailsScreen.tsx:30 ~ getRecords ~ records.data:",
-                records.data,
-            );
-        };
-
-        getRecords();
+        return unsubscribe;
     }, []);
 
     navigation.setOptions({
@@ -47,36 +55,77 @@ const HiveDetailsScreen: React.FC<Props> = ({
         ),
     });
 
+    const profit = useMemo(
+        () =>
+            records.reduce((acc, record) => {
+                acc += record.amount;
+                return acc;
+            }, 0),
+        [records],
+    );
+
+    const showDeletePopup = useCallback(
+        (recordId: string) => {
+            Alert.alert(
+                "Delete record",
+                "Are you sure you want to delete this record?",
+                [
+                    {
+                        text: "Cancel",
+                        style: "cancel",
+                    },
+                    {
+                        text: "Delete",
+                        onPress: async () => {
+                            try {
+                                await apiClient.delete(`/beehive/${hive._id}/records/${recordId}`);
+                                getRecords();
+                            } catch (error) {
+                                console.log(error);
+                            }
+                        },
+                    },
+                ],
+                { cancelable: false },
+            );
+        },
+        [getRecords, hive._id],
+    );
+
     return (
         <BFScreen applyPadding>
             <ScrollView>
                 <BFTitle
-                    title={hive.name}
+                    title={currentHive.name}
                     style={{ marginBottom: 5 }}
                 />
-                <View style={[styles.horizontalLine, { borderColor: hive.color }]} />
+                <View style={[styles.horizontalLine, { borderColor: currentHive.color }]} />
                 <View style={styles.table}>
                     <View style={styles.row}>
                         <Text style={styles.label}>Assigned Number:</Text>
-                        <Text style={styles.value}>{hive.assigned_number}</Text>
+                        <Text style={styles.value}>{currentHive.assigned_number}</Text>
                     </View>
                     <View style={styles.row}>
                         <Text style={styles.label}>Description:</Text>
-                        <Text style={styles.value}>{hive.description}</Text>
+                        <Text style={styles.value}>{currentHive.description}</Text>
                     </View>
                     <View style={styles.row}>
                         <Text style={styles.label}>Location:</Text>
-                        <Text style={styles.value}>{hive.location}</Text>
+                        <Text style={styles.value}>{currentHive.location}</Text>
                     </View>
                     <View style={styles.row}>
                         <Text style={styles.label}>Population:</Text>
-                        <Text style={styles.value}>{hive.population}</Text>
+                        <Text style={styles.value}>{currentHive.population}</Text>
                     </View>
                     <View style={styles.row}>
                         <Text style={styles.label}>Birthday:</Text>
                         <Text style={styles.value}>
-                            {new Date(hive.birthday).toLocaleDateString()}
+                            {new Date(currentHive.birthday).toLocaleDateString()}
                         </Text>
+                    </View>
+                    <View style={styles.row}>
+                        <Text style={styles.label}>Profit:</Text>
+                        <Text style={styles.value}>{profit}</Text>
                     </View>
                     <BFTitle
                         title={"Records"}
@@ -86,21 +135,39 @@ const HiveDetailsScreen: React.FC<Props> = ({
                         title={"Add new record"}
                         onPress={() => navigation.navigate("NewRecord", { hiveId: hive._id })}
                     />
+                    {records.length > 0 && (
+                        <View style={styles.row}>
+                            <Text style={styles.recordTextHeader}>Date</Text>
+                            <Text style={styles.recordTextHeader}>Description</Text>
+                            <Text style={[styles.recordTextHeader, { textAlign: "right" }]}>
+                                Amount
+                            </Text>
+                            <Text style={[styles.recordTextHeader, { textAlign: "right" }]}>
+                                Type
+                            </Text>
+                        </View>
+                    )}
+                    {records.length > 0 &&
+                        records.map(record => (
+                            <TouchableOpacity
+                                style={styles.row}
+                                key={record._id}
+                                onPress={showDeletePopup.bind(this, record._id)}
+                            >
+                                <Text style={styles.recordText}>
+                                    {new Date(record.date).toLocaleDateString()}
+                                </Text>
+                                <Text style={styles.recordText}>{record.description}</Text>
+                                <Text style={[styles.recordText, { textAlign: "right" }]}>
+                                    {record.amount}
+                                </Text>
+                                <Text style={[styles.recordText, { textAlign: "right" }]}>
+                                    {record.type}
+                                </Text>
+                            </TouchableOpacity>
+                        ))}
                 </View>
             </ScrollView>
-            <FlatList
-                data={records}
-                renderItem={({ item }) => (
-                    <View style={styles.row}>
-                        <Text style={styles.label}>{item.date.toISOString()}</Text>
-                        <Text style={styles.value}>{item.description}</Text>
-                    </View>
-                )}
-                keyExtractor={item => item._id}
-                ListEmptyComponent={() => (
-                    <Text style={{ textAlign: "center", marginTop: 20 }}>No records found</Text>
-                )}
-            />
         </BFScreen>
     );
 };
@@ -136,5 +203,14 @@ const styles = StyleSheet.create({
     value: {
         flex: 2,
         fontSize: 18,
+    },
+    recordText: {
+        fontSize: 14,
+        flex: 1,
+    },
+    recordTextHeader: {
+        fontSize: 14,
+        fontWeight: "bold",
+        flex: 1,
     },
 });
