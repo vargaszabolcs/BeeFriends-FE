@@ -131,10 +131,26 @@ const HiveDetailsScreen: React.FC<Props> = ({
                         title={"Records"}
                         style={{ marginTop: 25, marginBottom: 5, fontSize: 22 }}
                     />
-                    <BFButton
-                        title={"Add new record"}
-                        onPress={() => navigation.navigate("NewRecord", { hiveId: hive._id })}
-                    />
+                    <View style={{ flexDirection: "row", justifyContent: "space-around" }}>
+                        <BFButton
+                            title={"Add income +"}
+                            onPress={() =>
+                                navigation.navigate("NewRecord", {
+                                    hiveId: hive._id,
+                                    balanceType: "INCOME",
+                                })
+                            }
+                        />
+                        <BFButton
+                            title={"Add expense -"}
+                            onPress={() =>
+                                navigation.navigate("NewRecord", {
+                                    hiveId: hive._id,
+                                    balanceType: "EXPENSE",
+                                })
+                            }
+                        />
+                    </View>
                     {records.length > 0 && (
                         <View style={styles.row}>
                             <Text style={styles.recordTextHeader}>Date</Text>
@@ -158,7 +174,15 @@ const HiveDetailsScreen: React.FC<Props> = ({
                                     {new Date(record.date).toLocaleDateString()}
                                 </Text>
                                 <Text style={styles.recordText}>{record.description}</Text>
-                                <Text style={[styles.recordText, { textAlign: "right" }]}>
+                                <Text
+                                    style={[
+                                        styles.recordText,
+                                        {
+                                            textAlign: "right",
+                                            color: record.amount > 0 ? "green" : "red",
+                                        },
+                                    ]}
+                                >
                                     {record.amount}
                                 </Text>
                                 <Text style={[styles.recordText, { textAlign: "right" }]}>
@@ -207,6 +231,9 @@ const styles = StyleSheet.create({
     recordText: {
         fontSize: 14,
         flex: 1,
+    },
+    recordTextPositive: {
+        color: "green",
     },
     recordTextHeader: {
         fontSize: 14,

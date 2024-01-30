@@ -18,7 +18,7 @@ export type MainStackParamList = {
     Settings: undefined;
     ChangePassword: undefined;
     DeleteAccount: undefined;
-    NewRecord: { hiveId: string };
+    NewRecord: { hiveId: string; balanceType: "INCOME" | "EXPENSE" };
 };
 
 export interface IUser {
@@ -49,14 +49,16 @@ export type BeehiveData = {
 
 export type RecordData = {
     _id: string;
-    type: "harvest" | "feeding" | "inspection" | "treatment" | "other";
+    type: RecordType;
     amount: number;
     date: Date;
     description: string;
 };
 
 export enum RecordType {
-    HARVEST = "Harvest",
+    SALE_HONEY = "Honey",
+    SALE_BEESWAX = "Beeswax",
+    SALE_PROPOLIS = "Pollen",
     FEEDING = "Feeding",
     INSPECTION = "Inspection",
     TREATMENT = "Treatment",

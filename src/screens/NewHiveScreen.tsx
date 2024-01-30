@@ -23,7 +23,7 @@ interface NewHiveFormValues {
 const validationSchema = Yup.object().shape({
     name: Yup.string().required("Name is required"),
     location: Yup.string().required("Location is required"),
-    description: Yup.string().required("Description is required"),
+    description: Yup.string(),
     color: Yup.string().required("Color is required"),
     assigned_number: Yup.number().required("Assigned number is required").positive().integer(),
     population: Yup.number().required("Population is required").positive().integer(),

@@ -132,12 +132,13 @@ const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
                 placeholder="Name"
             />
             {error ? <Text style={styles.error}>{error}</Text> : null}
-            <SubmitButton
-                text="Submit"
-                onPress={onSubmit}
-                isDisabled={isLoading}
-            />
+
             <View style={styles.textContainer}>
+                <SubmitButton
+                    text="Submit"
+                    onPress={onSubmit}
+                    isDisabled={isLoading}
+                />
                 <ExtraLink
                     text="I already have an account"
                     onPress={navigation.goBack}

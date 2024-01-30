@@ -1,7 +1,7 @@
-import { Picker } from "@react-native-picker/picker";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React, { useState } from "react";
 import { StyleSheet, Text } from "react-native";
+import RNPickerSelect from "react-native-picker-select";
 import BFButton from "../components/common/BFButton";
 import BFInputField from "../components/common/BFInputField";
 import BFScreen from "../components/common/BFScreen";
@@ -20,21 +20,31 @@ export interface FormRecordData {
 const NewRecordScreen: React.FC<Props> = ({ route, navigation }) => {
     const [loading, setLoading] = useState(false);
     const hiveId = route.params.hiveId;
+    const balanceType = route.params.balanceType;
 
-    const [type, setType] = useState("");
+    const [type, setType] = useState(RecordType.SALE_HONEY);
     const [amount, setAmount] = useState("");
     const [description, setDescription] = useState("");
 
     const onSubmit = async () => {
-        if (!type || !amount || !description) {
+        if (!type || !amount) {
             return;
         }
 
         setLoading(true);
+
+        let newAmount = parseFloat(amount);
+        if (
+            type !== RecordType.SALE_HONEY &&
+            type !== RecordType.SALE_BEESWAX &&
+            type !== RecordType.SALE_PROPOLIS
+        ) {
+            newAmount = -newAmount;
+        }
         try {
             const res = await apiClient.post(`/beehive/${hiveId}/records`, {
                 type,
-                amount,
+                amount: newAmount,
                 description,
             });
             if (res) {
@@ -45,36 +55,36 @@ const NewRecordScreen: React.FC<Props> = ({ route, navigation }) => {
         }
     };
 
+    const incomeItems = [
+        { label: RecordType.SALE_HONEY, value: RecordType.SALE_HONEY },
+        { label: RecordType.SALE_BEESWAX, value: RecordType.SALE_BEESWAX },
+        { label: RecordType.SALE_PROPOLIS, value: RecordType.SALE_PROPOLIS },
+    ];
+
+    const expenseItems = [
+        { label: RecordType.FEEDING, value: RecordType.FEEDING },
+        { label: RecordType.TREATMENT, value: RecordType.TREATMENT },
+        {
+            label: RecordType.INSPECTION,
+            value: RecordType.INSPECTION,
+        },
+    ];
+
+    const selectItems = balanceType === "INCOME" ? incomeItems : expenseItems;
+
     return (
         <BFScreen applyPadding>
             <BFTitle title="Add New Record" />
-            <Text style={styles.label}>Type</Text>
-            <Picker
-                selectedValue={type}
-                onValueChange={itemValue => setType(itemValue)}
-                itemStyle={{ fontSize: 16 }}
-            >
-                <Picker.Item
-                    label={RecordType.HARVEST}
-                    value={RecordType.HARVEST}
-                />
-                <Picker.Item
-                    label={RecordType.FEEDING}
-                    value={RecordType.FEEDING}
-                />
-                <Picker.Item
-                    label={RecordType.TREATMENT}
-                    value={RecordType.TREATMENT}
-                />
-                <Picker.Item
-                    label={RecordType.INSPECTION}
-                    value={RecordType.INSPECTION}
-                />
-                <Picker.Item
-                    label={RecordType.OTHER}
-                    value={RecordType.OTHER}
-                />
-            </Picker>
+            <Text style={styles.label}>
+                {balanceType === "INCOME" ? "Sale Type" : "Expense Type"}
+            </Text>
+            <RNPickerSelect
+                onValueChange={setType}
+                placeholder={{}}
+                value={type}
+                style={pickerSelectStyles}
+                items={selectItems}
+            />
             <BFInputField
                 placeholder="0"
                 onChangeText={setAmount}
@@ -101,5 +111,31 @@ export default NewRecordScreen;
 const styles = StyleSheet.create({
     label: {
         fontSize: 18,
+    },
+});
+
+const pickerSelectStyles = StyleSheet.create({
+    inputIOS: {
+        fontSize: 18,
+        padding: 5,
+        backgroundColor: "#c2e3ff",
+        borderRadius: 7,
+        color: "black",
+        minHeight: 40,
+        marginBottom: 10,
+        marginTop: 5,
+        paddingRight: 30, // to ensure the text is never behind the icon
+    },
+    inputAndroid: {
+        fontSize: 18,
+        minHeight: 40,
+        paddingHorizontal: 10,
+        paddingVertical: 8,
+        backgroundColor: "#c2e3ff",
+        borderRadius: 7,
+        color: "black",
+        marginBottom: 10,
+        marginTop: 5,
+        paddingRight: 30, // to ensure the text is never behind the icon
     },
 });
