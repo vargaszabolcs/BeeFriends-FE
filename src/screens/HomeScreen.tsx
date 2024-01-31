@@ -16,6 +16,7 @@ const HomeScreen = ({ navigation }: Prop) => {
     return (
         <BFScreen applyPadding>
             <WelcomeContainer />
+
             <HivesContainer onHivePress={onHivePress} />
             <BFButton
                 title={"Add new hive"}
